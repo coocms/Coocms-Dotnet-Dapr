@@ -10,7 +10,7 @@ namespace WebApi.Controllers
     {
         public IActionResult Index()
         {
-            return Ok("This is Service");
+            return Ok("{\"A\":1,\"B\":2}");
         }
     }
 }

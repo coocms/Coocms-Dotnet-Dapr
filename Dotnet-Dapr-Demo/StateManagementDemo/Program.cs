@@ -10,7 +10,10 @@ namespace StateManagementDemo
         static void Main(string[] args)
         {
             SaveAndGetState();
-            Console.Read();
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
         }
         static async void SaveAndGetState()
         {

@@ -49,13 +49,12 @@ namespace Caller
     {
         static void Main(string[] args)
         {
-            var client = new DaprClientBuilder().UseGrpcEndpoint("http://121.5.35.98:35995").Build();
-            string appId = "webapp";
 
-            //var sta = client.CheckHealthAsync().Result;
-            var re = client.InvokeMethodGrpcAsync<TestType>(appId, "Service").Result;//{\"A\":1,\"B\":2}
-
+            CallServiceBySDKHttp();
         }
+        /// <summary>
+        /// 使用dapr sdk 来完成服务调用
+        /// </summary>
         static void CallServiceBySDKHttp()
         {
             var client = new DaprClientBuilder().UseHttpEndpoint("http://121.5.35.98:3500").Build();
@@ -64,6 +63,9 @@ namespace Caller
             //var sta = client.CheckHealthAsync().Result;
             var re = client.InvokeMethodAsync<TestType>(HttpMethod.Get, appId, "Service").Result;//{\"A\":1,\"B\":2}
         }
+        /// <summary>
+        /// 通过组装 http请求的方式调用服务
+        /// </summary>
         static void CallServiceByHttp()
         {
             var baseURL = (Environment.GetEnvironmentVariable("BASE_URL") ?? "http://121.5.35.98") + ":" + (Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3500");

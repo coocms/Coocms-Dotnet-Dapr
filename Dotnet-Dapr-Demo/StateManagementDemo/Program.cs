@@ -15,6 +15,10 @@ namespace StateManagementDemo
                 Thread.Sleep(1000);
             }
         }
+
+        /// <summary>
+        /// sdk 获取 设置 state状态信息不支持远程访问， 只能通过服务访问自己的sidecar来完成 并且通过grpc 的方式
+        /// </summary>
         static async void SaveAndGetState()
         {
 
@@ -26,6 +30,7 @@ namespace StateManagementDemo
                 Random random = new Random();
                 int orderId = random.Next(1, 1000);
                 //Using Dapr SDK to save and get state
+                
                 await client.SaveStateAsync(DAPR_STORE_NAME, "order_1", orderId.ToString());
                 await client.SaveStateAsync(DAPR_STORE_NAME, "order_2", orderId.ToString());
                 var result = await client.GetStateAsync<string>(DAPR_STORE_NAME, "order_1");

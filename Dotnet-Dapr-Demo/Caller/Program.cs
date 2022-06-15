@@ -8,58 +8,28 @@ using System.Threading.Tasks;
 
 namespace Caller
 {
-    class TestType : IMessage<TestType>
+    class TestType
     {
         public int A { get; set; }
         public int B { get; set; }
 
-        public MessageDescriptor Descriptor => throw new NotImplementedException();
-
-        public int CalculateSize()
-        {
-            throw new NotImplementedException();
-        }
-
-        public TestType Clone()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Equals(TestType other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MergeFrom(TestType message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MergeFrom(CodedInputStream input)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteTo(CodedOutputStream output)
-        {
-            throw new NotImplementedException();
-        }
     }
     class Program
     {
         static void Main(string[] args)
         {
 
-            CallServiceBySDKHttp();
+            CallServiceByHttp();
         }
         /// <summary>
         /// 使用dapr sdk 来完成服务调用
         /// </summary>
         static void CallServiceBySDKHttp()
         {
-            var client = new DaprClientBuilder().UseHttpEndpoint("http://121.5.35.98:3500").Build();
+            //var client = new DaprClientBuilder().UseHttpEndpoint("http://121.5.35.98:3500").Build();
+            var client = new DaprClientBuilder().Build();
             string appId = "webapp";
-
+            
             //var sta = client.CheckHealthAsync().Result;
             var re = client.InvokeMethodAsync<TestType>(HttpMethod.Get, appId, "Service").Result;//{\"A\":1,\"B\":2}
         }

@@ -29,8 +29,9 @@ namespace Caller
             //var client = new DaprClientBuilder().UseHttpEndpoint("http://121.5.35.98:3500").Build();
             var client = new DaprClientBuilder().Build();
             string appId = "webapp";
-            
+
             //var sta = client.CheckHealthAsync().Result;
+            
             var re = client.InvokeMethodAsync<TestType>(HttpMethod.Get, appId, "Service").Result;//{\"A\":1,\"B\":2}
             Console.WriteLine(re.A.ToString() + "  " + re.B.ToString());
         }

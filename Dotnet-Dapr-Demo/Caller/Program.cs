@@ -19,7 +19,7 @@ namespace Caller
         static void Main(string[] args)
         {
 
-            CallServiceByHttp();
+            CallServiceBySDKHttp();
         }
         /// <summary>
         /// 使用dapr sdk 来完成服务调用
@@ -32,6 +32,7 @@ namespace Caller
             
             //var sta = client.CheckHealthAsync().Result;
             var re = client.InvokeMethodAsync<TestType>(HttpMethod.Get, appId, "Service").Result;//{\"A\":1,\"B\":2}
+            Console.WriteLine(re.A.ToString() + "  " + re.B.ToString());
         }
         /// <summary>
         /// 通过组装 http请求的方式调用服务

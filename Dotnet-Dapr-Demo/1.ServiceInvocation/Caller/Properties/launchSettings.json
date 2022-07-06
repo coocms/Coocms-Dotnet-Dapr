@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Caller": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

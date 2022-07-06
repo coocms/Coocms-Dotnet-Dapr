@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+
+  dapr-invoke-demo-api:
+    image: ${DOCKER_REGISTRY-}dapr-invoke-demo-api
+    depends_on:
+      - redis
+      - placement
+    ports:
+      - "3501:3500"
+    build:
+      context: .
+      dockerfile: ./WebApi/Dockerfile
+    networks:
+      - demo_web
+
+
+  dapr-invoke-demo-api-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "webapp","--app-port", "5000", "-components-path","/components"]
+    volumes:
+      - ./components:/components
+    depends_on:
+      - dapr-invoke-demo-api
+    network_mode: "service:dapr-invoke-demo-api"
+
+  
+networks:
+  demo_web:

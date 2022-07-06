@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+      
+  dapr-invoke-demo-caller:
+    image: ${DOCKER_REGISTRY-}dapr-invoke-demo-caller
+    depends_on:
+      - redis
+      - placement
+    ports:
+      - "3500:3500"
+    build:
+      context: .
+      dockerfile: ./Caller/Dockerfile
+    networks:
+      - demo_web
+
+
+  dapr-invoke-demo-caller-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "caller","-components-path","/components"]
+    volumes:
+      - ./components:/components
+    depends_on:
+      - dapr-invoke-demo-caller
+    network_mode: "service:dapr-invoke-demo-caller"
+
+networks:
+  demo_web:
+  

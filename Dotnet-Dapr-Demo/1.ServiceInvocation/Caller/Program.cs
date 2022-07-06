@@ -31,9 +31,22 @@ namespace Caller
             string appId = "webapp";
 
             //var sta = client.CheckHealthAsync().Result;
-            
-            var re = client.InvokeMethodAsync<TestType>(HttpMethod.Get, appId, "Service").Result;//{\"A\":1,\"B\":2}
-            Console.WriteLine(re.A.ToString() + "  " + re.B.ToString());
+
+            while (true)
+            {
+                Thread.Sleep(2000);
+                try
+                {
+                    var re = client.InvokeMethodAsync<TestType>(HttpMethod.Get, appId, "Service").Result;//{\"A\":1,\"B\":2}
+                    Console.WriteLine(re.A.ToString() + "  " + re.B.ToString());
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
+                
+            }
         }
         /// <summary>
         /// 通过组装 http请求的方式调用服务

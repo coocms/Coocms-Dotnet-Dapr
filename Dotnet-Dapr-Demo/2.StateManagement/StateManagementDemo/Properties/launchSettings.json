@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "StateManagementDemo": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

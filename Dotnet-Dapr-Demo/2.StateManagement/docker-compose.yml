@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+      
+  dapr-state-management:
+    image: ${DOCKER_REGISTRY-}dapr-state-management
+    depends_on:
+      - redis
+      - placement
+
+    build:
+      context: .
+      dockerfile: ./StateManagementDemo/Dockerfile
+    networks:
+      - stateManagement_net
+
+
+  dapr-state-management-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "state-management","-components-path","/components","-placement-host-address", "placement:50005", "-config","/config/zipkinConfig.yml"]
+    volumes:
+      - ./components:/components
+      - ./config:/config
+    depends_on:
+      - dapr-state-management
+    network_mode: "service:dapr-state-management"
+
+networks:
+  stateManagement_net:
+  

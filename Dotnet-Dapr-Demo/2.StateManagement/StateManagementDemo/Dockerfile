@@ -5,14 +5,17 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["StateManagementDemo/StateManagementDemo.csproj", "StateManagementDemo/"]
-RUN dotnet restore "StateManagementDemo/StateManagementDemo.csproj"
+
 COPY . .
+WORKDIR /src/StateManagementDemo
+RUN dotnet restore
+
+copy /StateManagementDemo .
 WORKDIR "/src/StateManagementDemo"
-RUN dotnet build "StateManagementDemo.csproj" -c Release -o /app/build
+RUN dotnet build -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "StateManagementDemo.csproj" -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

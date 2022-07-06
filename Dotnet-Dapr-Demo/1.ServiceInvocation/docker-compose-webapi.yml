@@ -18,9 +18,10 @@ services:
 
   dapr-invoke-demo-api-dapr:
     image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "webapp","--app-port", "5000", "-components-path","/components"]
+    command: [ "./daprd", "-app-id", "webapp","--app-port", "5000", "-components-path","/components","-placement-host-address", "placement:50005","-config","/config/zipkinConfig.yml"]
     volumes:
       - ./components:/components
+      - ./config:/config
     depends_on:
       - dapr-invoke-demo-api
     network_mode: "service:dapr-invoke-demo-api"

@@ -18,9 +18,10 @@ services:
 
   dapr-invoke-demo-caller-dapr:
     image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "caller","-components-path","/components"]
+    command: [ "./daprd", "-app-id", "caller","-components-path","/components","-placement-host-address", "placement:50005", "-config","/config/zipkinConfig.yml"]
     volumes:
       - ./components:/components
+      - ./config:/config
     depends_on:
       - dapr-invoke-demo-caller
     network_mode: "service:dapr-invoke-demo-caller"

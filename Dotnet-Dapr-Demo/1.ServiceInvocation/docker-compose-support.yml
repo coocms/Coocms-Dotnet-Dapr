@@ -16,9 +16,7 @@ services:
   ############################
   placement:
     image: "daprio/dapr"
-    command: ["./placement", "-port", "50005"]
-    #ports:
-    #  - "50006:50005"
+    command: ["./placement"]
     networks:
       - demo_web
 

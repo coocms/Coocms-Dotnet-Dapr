@@ -18,7 +18,8 @@ services:
 
   dapr-invoke-demo-api-dapr:
     image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "webapp","--app-port", "5000", "-components-path","/components","-placement-host-address", "placement:50005","-config","/config/zipkinConfig.yml"]
+    command: [ "./daprd", "-app-id", "webapp","--app-port", "5000", "-components-path","/components","-config","/config/zipkinConfig.yml"]
+    #--app-port 是指 webapi的服务端口
     volumes:
       - ./components:/components
       - ./config:/config

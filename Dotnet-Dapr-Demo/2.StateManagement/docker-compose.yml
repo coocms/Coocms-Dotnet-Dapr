@@ -7,6 +7,8 @@ services:
     depends_on:
       - redis
       - placement
+    ports:
+      - "3500:3500"
 
     build:
       context: .
@@ -17,7 +19,7 @@ services:
 
   dapr-state-management-dapr:
     image: "daprio/daprd:latest"
-    command: [ "./daprd", "-app-id", "state-management","-components-path","/components","-placement-host-address", "placement:50005", "-config","/config/zipkinConfig.yml"]
+    command: [ "./daprd", "-app-id", "state-management","-components-path","/components", "-config","/config/zipkinConfig.yml"]
     volumes:
       - ./components:/components
       - ./config:/config

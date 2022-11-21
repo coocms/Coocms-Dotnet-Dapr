@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Subscriber
@@ -36,7 +37,7 @@ namespace Subscriber
             }
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

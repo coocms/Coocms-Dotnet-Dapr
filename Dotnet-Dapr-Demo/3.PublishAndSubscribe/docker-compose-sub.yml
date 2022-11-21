@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+
+  dapr-pubsub-sub:
+    image: ${DOCKER_REGISTRY-}dapr-pubsub-sub
+    depends_on:
+      - redis
+      - placement
+    ports:
+      - "3501:3500"
+    build:
+      context: .
+      dockerfile: ./Subscriber/Dockerfile
+    networks:
+      - pubsub_net
+
+
+  dapr-pubsub-sub-dapr:
+    image: "daprio/daprd:latest"
+    command: [ "./daprd", "-app-id", "webapp","--app-port", "5000", "-components-path","/components","-config","/config/zipkinConfig.yml"]
+    #--app-port 是指 webapi的服务端口
+    volumes:
+      - ./components:/components
+      - ./config:/config
+    depends_on:
+      - dapr-pubsub-sub
+    network_mode: "service:dapr-pubsub-sub"
+
+  
+networks:
+  pubsub_net:

@@ -1,5 +1,6 @@
 ﻿using Dapr.Client;
 using System;
+using System.Text.Json.Serialization;
 using System.Threading;
 
 namespace Publisher
@@ -19,9 +20,11 @@ namespace Publisher
                 CancellationToken cancellationToken = source.Token;
                 using var client = new DaprClientBuilder().Build();
                 //Using Dapr SDK to publish a topic
-                client.PublishEventAsync(PUBSUB_NAME, TOPIC_NAME, orderId, cancellationToken).Wait();
-                Console.WriteLine("Published data: " + orderId);
+                var message = new Order(orderId);
+                client.PublishEventAsync(PUBSUB_NAME, TOPIC_NAME, message).Wait();
+                Console.WriteLine("Published data: " + message);
             }
         }
     }
+    public record Order([property: JsonPropertyName("orderId")] int OrderId);
 }

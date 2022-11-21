@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapr;
 using Dapr.Client;
+using System.Text.Json.Serialization;
 
 namespace Subscriber.Controllers
 {
@@ -14,9 +15,10 @@ namespace Subscriber.Controllers
         [Topic("order-pub-sub", "orders")]
         [HttpPost("checkout")]
 
-        public void getCheckout([FromBody] int orderId)
+        public void getCheckout(Order order)
         {
-            Console.WriteLine("Subscriber received : " + orderId);
+            Console.WriteLine("Subscriber received : " + order);
         }
     }
+    public record Order([property: JsonPropertyName("orderId")] int OrderId);
 }

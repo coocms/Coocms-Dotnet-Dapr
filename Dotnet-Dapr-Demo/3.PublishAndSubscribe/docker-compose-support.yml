@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  ############################
+  # Redis state store
+  ############################
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - pubsub_net
+
+  ############################
+  #Dapr actor placement service
+  ############################
+  placement:
+    image: "daprio/dapr"
+    command: ["./placement"]
+    networks:
+      - pubsub_net
+
+  ############################
+  # Dapr zipkin service
+  ############################
+  zipkin:
+    image: "openzipkin/zipkin:latest"
+    #command: ["/zipkin","start-zipkin"]
+    ports:
+      - "9413:9411"
+    networks:
+      - pubsub_net
+
+networks:
+  pubsub_net:
+  
